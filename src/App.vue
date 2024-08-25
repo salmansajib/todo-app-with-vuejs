@@ -1,13 +1,12 @@
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
 import { nanoid } from "nanoid";
-import { CopyX } from "lucide-vue-next";
+import { SquareX } from "lucide-vue-next";
 
 const todos = ref([]);
 const name = ref("");
 
 const inputContent = ref("");
-// const inputCategory = ref(null);
 
 const todosAsc = computed(() =>
   todos.value.sort((a, b) => {
@@ -26,6 +25,7 @@ const addTodo = () => {
     completed: false,
     createdAt: new Date().getTime(),
   });
+
   inputContent.value = "";
 };
 
@@ -54,7 +54,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="bg-gray-200 min-h-screen">
+  <main class="bg-gray-200 text-slate-950 min-h-screen">
     <div class="max-w-[500px] mx-auto px-3 space-y-5">
       <section>
         <h2 class="flex text-[1.5rem] font-semibold">
@@ -78,12 +78,12 @@ onMounted(() => {
             placeholder="e.g. make a video"
             v-model="inputContent"
           />
-          <!-- <h4>Pick a category</h4> -->
-          <input
-            class="bg-blue-500 w-full py-2 rounded-[4px] mt-3 cursor-pointer"
+          <button
+            class="bg-slate-900 text-gray-50 hover:bg-blue-700 font-medium w-full py-2 rounded-[4px] mt-3 cursor-pointer transition-colors duration-200 ease-in-out"
             type="submit"
-            value="Add Todo"
-          />
+          >
+            ADD TODO
+          </button>
         </form>
       </section>
 
@@ -91,23 +91,26 @@ onMounted(() => {
         <h3>Todo's</h3>
         <div class="space-y-3">
           <div
-            class="flex gap-3 p-2 bg-green-50 rounded-[4px]"
+            class="flex items-center gap-3 p-2 bg-gray-50 rounded-[4px]"
             v-for="todo in todosAsc"
             :key="todo.id"
           >
-            <label>
-              <input type="checkbox" v-model="todo.completed" />
-            </label>
+            <input
+              class="w-4 h-4 cursor-pointer"
+              type="checkbox"
+              v-model="todo.completed"
+            />
+
             <div class="grow">
               <input
-                class="w-full bg-transparent outline-none"
+                class="w-full bg-transparent outline-none text-inherit"
                 :class="todo.completed ? 'line-through' : ''"
                 type="text"
                 v-model="todo.content"
               />
             </div>
             <button @click="deleteTodo(todo.id)" class="ml-auto cursor-pointer">
-              <CopyX color="red" />
+              <SquareX class="text-slate-950 hover:text-red-600" />
             </button>
           </div>
         </div>
