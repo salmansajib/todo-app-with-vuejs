@@ -54,12 +54,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="bg-gray-200 text-slate-950 min-h-screen">
+  <main class="bg-slate-900 text-slate-200 min-h-screen py-10">
     <div class="max-w-[500px] mx-auto px-3 space-y-5">
       <section>
-        <h2 class="flex text-[1.5rem] font-semibold">
+        <h2 class="flex text-3xl font-semibold">
           what's up,
           <input
+            :class="name !== '' ? ' cursor-default' : 'cursor-text'"
             class="ml-[0.5rem] bg-transparent min-w-0 grow shrink basis-0 border-none outline-none"
             type="text"
             placeholder="Name here"
@@ -68,49 +69,55 @@ onMounted(() => {
         </h2>
       </section>
 
-      <section class="space-y-3">
-        <h3>Create A Todo</h3>
+      <section class="space-y-1">
+        <h3 class="text-xl">Create A Todo</h3>
         <form @submit.prevent="addTodo">
-          <h4>What's on your todo list?</h4>
           <input
-            class="mt-2 px-2 py-2 w-full rounded-[4px]"
+            class="bg-slate-700 mt-2 px-2 py-2 text-lg w-full rounded-[4px] placeholder:text-slate-400"
             type="text"
             placeholder="e.g. make a video"
             v-model="inputContent"
           />
           <button
-            class="bg-slate-900 text-gray-50 hover:bg-blue-700 font-medium w-full py-2 rounded-[4px] mt-3 cursor-pointer transition-colors duration-200 ease-in-out"
+            class="bg-green-400 hover:bg-green-500 text-lg text-slate-900 font-medium w-full py-2 rounded-[4px] mt-3 cursor-pointer transition-color duration-300 ease-in-out"
             type="submit"
           >
-            ADD TODO
+            Add Todo
           </button>
         </form>
       </section>
 
       <section>
-        <h3>Todo's</h3>
-        <div class="space-y-3">
+        <h3 class="text-2xl mb-2 text-center font-semibold">Todo's</h3>
+
+        <div v-if="todos.length === 0">
+          <h3 class="text-lg font-medium text-green-600 text-center">
+            Your list is empty, Please add a todo.
+          </h3>
+        </div>
+
+        <div v-else class="space-y-3">
           <div
-            class="flex items-center gap-3 p-2 bg-gray-50 rounded-[4px]"
+            class="flex items-center gap-3 p-2 bg-slate-800 rounded-[4px]"
             v-for="todo in todosAsc"
             :key="todo.id"
           >
             <input
-              class="w-4 h-4 cursor-pointer"
+              class="cursor-pointer"
               type="checkbox"
               v-model="todo.completed"
             />
 
             <div class="grow">
               <input
-                class="w-full bg-transparent outline-none text-inherit"
+                class="w-full bg-transparent outline-none text-lg text-inherit"
                 :class="todo.completed ? 'line-through' : ''"
                 type="text"
                 v-model="todo.content"
               />
             </div>
             <button @click="deleteTodo(todo.id)" class="ml-auto cursor-pointer">
-              <SquareX class="text-slate-950 hover:text-red-600" />
+              <SquareX size="22" class="text-slate-200 hover:text-red-600" />
             </button>
           </div>
         </div>
