@@ -1,5 +1,5 @@
 <script setup>
-import { ref, onMounted, computed, watch, nextTick } from "vue";
+import { ref, onMounted, computed, watch } from "vue";
 import { nanoid } from "nanoid";
 import { SquareX } from "lucide-vue-next";
 import { Settings2 } from "lucide-vue-next";
@@ -64,12 +64,17 @@ watch(name, (newVal) => {
 });
 
 onMounted(() => {
-  name.value = localStorage.getItem("name") || "";
+  name.value = localStorage.getItem("name" || "");
   todos.value = JSON.parse(localStorage.getItem("todos") || []);
 });
 </script>
 
 <template>
+  <h1
+    class="absolute text-5xl sm:text-7xl lg:text-8xl text-slate-800/40 font-bold left-1/2 -translate-x-1/2 top-14 z-0"
+  >
+    TaskTrack
+  </h1>
   <main
     class="bg-slate-900 text-slate-200 min-h-screen py-5 flex items-center justify-center"
   >
@@ -78,10 +83,11 @@ onMounted(() => {
     >
       <!-- Header -->
       <section>
-        <h2 class="flex text-3xl font-semibold">
+        <h2
+          class="flex text-3xl font-semibold bg-gradient-to-r from-purple-400 to-rose-400 from-0% to-50% text-transparent bg-clip-text"
+        >
           what's up,
           <input
-            :class="name !== '' ? ' cursor-default' : 'cursor-text'"
             class="ml-[0.5rem] bg-transparent min-w-0 grow shrink basis-0 border-none outline-none"
             type="text"
             placeholder="Name here"
@@ -93,18 +99,21 @@ onMounted(() => {
       <!-- Adding Todos -->
       <section class="space-y-1">
         <h3 class="text-xl">Create A Todo</h3>
-        <form @submit.prevent="addTodo">
+        <form
+          class="flex items-center justify-center gap-3 pt-3"
+          @submit.prevent="addTodo"
+        >
           <input
-            class="bg-slate-700 mt-2 px-2 py-2 text-lg w-full rounded-[4px] placeholder:text-slate-400"
+            class="bg-slate-300 text-slate-900 text-lg grow p-2 rounded-[4px] placeholder:text-slate-500"
             type="text"
             placeholder="e.g. make a video"
             v-model="inputContent"
           />
           <button
-            class="bg-blue-300 hover:bg-blue-400 text-lg text-slate-900 font-medium w-full py-2 rounded-[4px] mt-3 cursor-pointer transition-color duration-300 ease-in-out"
+            class="bg-blue-600 px-5 py-2 hover:bg-blue-700 text-lg text-slate-100 font-medium rounded-[4px] cursor-pointer transition-color duration-300 ease-in-out"
             type="submit"
           >
-            Add Todo
+            ADD
           </button>
         </form>
       </section>
@@ -119,14 +128,14 @@ onMounted(() => {
           </h3>
         </div>
 
-        <div v-else class="space-y-3">
+        <div v-else class="space-y-5">
           <div
-            class="flex items-center gap-3 p-2 bg-slate-800 rounded-[4px]"
+            class="flex items-center gap-3 h-[3rem] px-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/5 transition-all duration-300 ease-in-out"
             v-for="todo in todosAsc"
             :key="todo.id"
           >
             <input
-              class="cursor-pointer"
+              class="cursor-pointer size-[15px]"
               type="checkbox"
               v-model="todo.completed"
             />
@@ -134,19 +143,19 @@ onMounted(() => {
             <div class="grow">
               <div v-if="editingTodoId === todo.id">
                 <input
-                  class="w-full bg-transparent border border-green-400 px-2 rounded-md outline-none text-lg text-inherit"
+                  class="w-full bg-transparent border border-blue-300 px-2 rounded-sm outline-none text-lg text-inherit"
                   type="text"
                   v-model="todo.content"
                   @blur="finishEditing"
                   @keyup.enter="finishEditing"
                 />
               </div>
-              <div
-                v-else
-                class="text-lg"
-                :class="todo.completed ? 'line-through text-slate-400' : ''"
-              >
-                {{ todo.content }}
+              <div v-else>
+                <span
+                  class="text-lg"
+                  :class="todo.completed ? 'line-through text-slate-400' : ''"
+                  >{{ todo.content }}</span
+                >
               </div>
             </div>
 
