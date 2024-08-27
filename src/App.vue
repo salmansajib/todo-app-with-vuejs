@@ -51,7 +51,7 @@ const finishEditing = () => {
   editingTodoId.value = null;
 };
 
-// capitalize the first word of a todo
+// capitalize the first letter of a todo
 const capitalizeFirstWord = (sentence) => {
   if (!sentence) return "";
   return sentence.charAt(0).toUpperCase() + sentence.slice(1).toLowerCase();
@@ -70,7 +70,7 @@ watch(name, (newVal) => {
 });
 
 onMounted(() => {
-  name.value = localStorage.getItem("name" || "");
+  name.value = localStorage.getItem("name") || "";
   todos.value = JSON.parse(localStorage.getItem("todos") || []);
 });
 </script>
