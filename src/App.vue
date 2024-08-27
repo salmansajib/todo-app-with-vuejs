@@ -51,6 +51,12 @@ const finishEditing = () => {
   editingTodoId.value = null;
 };
 
+// capitalize the first word of a todo
+const capitalizeFirstWord = (sentence) => {
+  if (!sentence) return "";
+  return sentence.charAt(0).toUpperCase() + sentence.slice(1).toLowerCase();
+};
+
 watch(
   todos,
   (newVal) => {
@@ -120,7 +126,9 @@ onMounted(() => {
 
       <!-- All Todos -->
       <section>
-        <h3 class="text-2xl mt-14 mb-3 text-center font-semibold">Todo's</h3>
+        <h3 class="text-2xl mt-14 mb-3 text-center font-semibold uppercase">
+          Todo's
+        </h3>
 
         <div v-if="todos.length === 0">
           <h3 class="text-lg font-medium text-green-600 text-center">
@@ -154,7 +162,7 @@ onMounted(() => {
                 <span
                   class="text-lg"
                   :class="todo.completed ? 'line-through text-slate-400' : ''"
-                  >{{ todo.content }}</span
+                  >{{ capitalizeFirstWord(todo.content) }}</span
                 >
               </div>
             </div>
