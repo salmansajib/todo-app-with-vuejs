@@ -1,12 +1,13 @@
 <script setup>
-import { ref, onMounted, computed, watch } from "vue";
+import { ref, onMounted, computed, watch, nextTick } from "vue";
 import { nanoid } from "nanoid";
 import { SquareX } from "lucide-vue-next";
+import { Settings2 } from "lucide-vue-next";
 
 const todos = ref([]);
 const name = ref("");
-
 const inputContent = ref("");
+const editingTodoId = ref(null);
 
 const todosAsc = computed(() =>
   todos.value.sort((a, b) => {
@@ -14,6 +15,7 @@ const todosAsc = computed(() =>
   })
 );
 
+// Add todo
 const addTodo = () => {
   if (inputContent.value.trim() === "") {
     return;
@@ -29,10 +31,24 @@ const addTodo = () => {
   inputContent.value = "";
 };
 
+// delete todo
 const deleteTodo = (id) => {
   todos.value = todos.value.filter((todo) => {
     return todo.id !== id;
   });
+};
+
+// Edit todo
+const editTodo = (id) => {
+  if (editingTodoId.value === id) {
+    editingTodoId.value = null;
+  } else {
+    editingTodoId.value = id;
+  }
+};
+
+const finishEditing = () => {
+  editingTodoId.value = null;
 };
 
 watch(
@@ -54,8 +70,13 @@ onMounted(() => {
 </script>
 
 <template>
-  <main class="bg-slate-900 text-slate-200 min-h-screen py-10">
-    <div class="max-w-[500px] mx-auto px-3 space-y-5">
+  <main
+    class="bg-slate-900 text-slate-200 min-h-screen py-5 flex items-center justify-center"
+  >
+    <div
+      class="max-w-[340px] sm:max-w-[500px] md:max-w-[630px] mx-auto px-3 space-y-5 grow"
+    >
+      <!-- Header -->
       <section>
         <h2 class="flex text-3xl font-semibold">
           what's up,
@@ -69,6 +90,7 @@ onMounted(() => {
         </h2>
       </section>
 
+      <!-- Adding Todos -->
       <section class="space-y-1">
         <h3 class="text-xl">Create A Todo</h3>
         <form @submit.prevent="addTodo">
@@ -79,7 +101,7 @@ onMounted(() => {
             v-model="inputContent"
           />
           <button
-            class="bg-green-400 hover:bg-green-500 text-lg text-slate-900 font-medium w-full py-2 rounded-[4px] mt-3 cursor-pointer transition-color duration-300 ease-in-out"
+            class="bg-blue-300 hover:bg-blue-400 text-lg text-slate-900 font-medium w-full py-2 rounded-[4px] mt-3 cursor-pointer transition-color duration-300 ease-in-out"
             type="submit"
           >
             Add Todo
@@ -87,8 +109,9 @@ onMounted(() => {
         </form>
       </section>
 
+      <!-- All Todos -->
       <section>
-        <h3 class="text-2xl mb-2 text-center font-semibold">Todo's</h3>
+        <h3 class="text-2xl mt-14 mb-3 text-center font-semibold">Todo's</h3>
 
         <div v-if="todos.length === 0">
           <h3 class="text-lg font-medium text-green-600 text-center">
@@ -109,15 +132,29 @@ onMounted(() => {
             />
 
             <div class="grow">
-              <input
-                class="w-full bg-transparent outline-none text-lg text-inherit"
-                :class="todo.completed ? 'line-through' : ''"
-                type="text"
-                v-model="todo.content"
-              />
+              <div v-if="editingTodoId === todo.id">
+                <input
+                  class="w-full bg-transparent border border-green-400 px-2 rounded-md outline-none text-lg text-inherit"
+                  type="text"
+                  v-model="todo.content"
+                  @blur="finishEditing"
+                  @keyup.enter="finishEditing"
+                />
+              </div>
+              <div
+                v-else
+                class="text-lg"
+                :class="todo.completed ? 'line-through text-slate-400' : ''"
+              >
+                {{ todo.content }}
+              </div>
             </div>
+
+            <button @click="editTodo(todo.id)" class="ml-auto cursor-pointer">
+              <Settings2 size="22" class="text-slate-200 hover:text-blue-400" />
+            </button>
             <button @click="deleteTodo(todo.id)" class="ml-auto cursor-pointer">
-              <SquareX size="22" class="text-slate-200 hover:text-red-600" />
+              <SquareX size="22" class="text-slate-200 hover:text-red-400" />
             </button>
           </div>
         </div>
