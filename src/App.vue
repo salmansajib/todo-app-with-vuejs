@@ -3,6 +3,7 @@ import { ref, onMounted, computed, watch } from "vue";
 import { nanoid } from "nanoid";
 import { SquareX } from "lucide-vue-next";
 import { Settings2 } from "lucide-vue-next";
+import { toast } from "vue3-toastify";
 
 const todos = ref([]);
 const name = ref("");
@@ -29,12 +30,20 @@ const addTodo = () => {
   });
 
   inputContent.value = "";
+
+  toast("Added Succesfully!", {
+    position: toast.POSITION.BOTTOM_RIGHT,
+  });
 };
 
 // delete todo
 const deleteTodo = (id) => {
   todos.value = todos.value.filter((todo) => {
     return todo.id !== id;
+  });
+
+  toast("Deleted Succesfully!", {
+    position: toast.POSITION.BOTTOM_RIGHT,
   });
 };
 
@@ -49,6 +58,10 @@ const editTodo = (id) => {
 
 const finishEditing = () => {
   editingTodoId.value = null;
+
+  toast("Updated Succesfully!", {
+    position: toast.POSITION.BOTTOM_RIGHT,
+  });
 };
 
 // capitalize the first letter of a todo
@@ -85,7 +98,7 @@ onMounted(() => {
     class="bg-slate-900 text-slate-200 min-h-screen py-5 flex items-center justify-center"
   >
     <div
-      class="max-w-[340px] sm:max-w-[500px] md:max-w-[630px] mx-auto px-3 space-y-5 grow"
+      class="max-w-[340px] sm:max-w-[600px] md:max-w-[630px] mx-auto px-3 space-y-5 grow"
     >
       <!-- Header -->
       <section>
@@ -138,7 +151,7 @@ onMounted(() => {
 
         <div v-else class="space-y-5">
           <div
-            class="flex items-center gap-3 h-[3rem] px-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/5 transition-all duration-300 ease-in-out"
+            class="flex items-center gap-3 px-3 py-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/5 transition-all duration-300 ease-in-out"
             v-for="todo in todosAsc"
             :key="todo.id"
           >
@@ -160,7 +173,7 @@ onMounted(() => {
               </div>
               <div v-else>
                 <span
-                  class="text-lg"
+                  class="text-lg leading-tight"
                   :class="todo.completed ? 'line-through text-slate-400' : ''"
                   >{{ capitalizeFirstWord(todo.content) }}</span
                 >

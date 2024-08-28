@@ -12,7 +12,8 @@
     "firebase": "^10.13.0",
     "lucide-vue-next": "^0.435.0",
     "nanoid": "^5.0.7",
-    "vue": "^3.4.29"
+    "vue": "^3.4.29",
+    "vue3-toastify": "^0.2.2"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.5",
