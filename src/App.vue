@@ -95,7 +95,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="h-screen w-screen overflow-hidden bg-black">
+  <div class="h-screen w-screen overflow-hidden bg-slate-950">
     <main
       class="text-slate-200 py-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
     >
@@ -105,7 +105,7 @@ onMounted(() => {
         <!-- Header -->
         <section>
           <h2
-            class="flex text-3xl font-semibold bg-gradient-to-r from-purple-400 to-rose-400 from-0% to-50% text-transparent bg-clip-text"
+            class="flex text-3xl font-semibold bg-gradient-to-r from-purple-300 to-rose-300 from-0% to-50% text-transparent bg-clip-text"
           >
             what's up,
             <input
@@ -125,16 +125,16 @@ onMounted(() => {
             @submit.prevent="addTodo"
           >
             <input
-              class="bg-slate-300/20 backdrop-blur-[2px] text-slate-100 text-lg grow p-2 rounded-[4px] border border-slate-100 placeholder:text-slate-400"
+              class="bg-slate-100/30 backdrop-blur-[3px] text-slate-100 text-lg grow p-2 rounded-[4px] placeholder:text-slate-400"
               type="text"
               placeholder="e.g. make a video"
               v-model="inputContent"
             />
             <button
-              class="bg-blue-600 px-5 py-2 hover:bg-blue-700 text-lg text-slate-100 border border-slate-100 font-medium rounded-[4px] cursor-pointer transition-color duration-300 ease-in-out"
+              class="bg-slate-100 hover:bg-slate-200 px-6 py-2 text-lg text-slate-900 font-medium rounded-[4px] cursor-pointer transition-color duration-200 ease-in-out"
               type="submit"
             >
-              ADD
+              Add
             </button>
           </form>
         </section>
@@ -204,15 +204,17 @@ onMounted(() => {
       class="relative z-0 h-screen w-screen mt-20 overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]"
     >
       <ParticlesEffect
-        :density="1200"
+        :density="1000"
+        :size="2"
+        :opacity="1"
         class="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
       />
 
       <div
-        class="absolute inset-x-0 -bottom-[254px] h-full w-full rounded-[100%] bg-gradient-to-b from-white to-black"
+        class="absolute inset-x-0 -bottom-[39.93vh] h-full w-full rounded-[100%] bg-gradient-to-b from-slate-100 to-slate-950"
       />
       <div
-        class="absolute inset-x-0 -bottom-[256px] h-full w-full rounded-[100%] bg-neutral-950 shadow-[inset_0_2px_20px_#fff,0_-10px_50px_1px_#ffffff7d]"
+        class="absolute inset-x-0 -bottom-[40vh] h-full w-full rounded-[100%] bg-slate-950 shadow-[inset_0_2px_20px_#fff,0_-10px_50px_1px_#ffffff7d]"
       />
     </div>
   </div>
