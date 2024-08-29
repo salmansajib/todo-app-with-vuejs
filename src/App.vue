@@ -125,13 +125,13 @@ onMounted(() => {
             @submit.prevent="addTodo"
           >
             <input
-              class="bg-slate-100/30 backdrop-blur-[3px] text-slate-100 text-lg grow p-2 rounded-[4px] placeholder:text-slate-400"
+              class="bg-slate-100/20 backdrop-blur-[2px] text-slate-100 text-lg grow p-2 rounded-[4px] placeholder:text-slate-500 border border-slate-100"
               type="text"
-              placeholder="e.g. make a video"
+              placeholder="add todo here"
               v-model="inputContent"
             />
             <button
-              class="bg-slate-100 hover:bg-slate-200 px-6 py-2 text-lg text-slate-900 font-medium rounded-[4px] cursor-pointer transition-color duration-200 ease-in-out"
+              class="bg-slate-100 hover:bg-slate-200 px-6 py-2 text-lg text-slate-900 font-medium rounded-[4px] cursor-pointer transition-color duration-200 ease-in-out border border-slate-100"
               type="submit"
             >
               Add
@@ -205,7 +205,7 @@ onMounted(() => {
     >
       <ParticlesEffect
         :density="1000"
-        :size="2"
+        :size="1.5"
         :opacity="1"
         class="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
       />
