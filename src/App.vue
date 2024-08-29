@@ -4,6 +4,7 @@ import { nanoid } from "nanoid";
 import { SquareX } from "lucide-vue-next";
 import { Settings2 } from "lucide-vue-next";
 import { toast } from "vue3-toastify";
+import ParticlesEffect from "@/components/stunning/ParticlesEffect/Slim.vue";
 
 const todos = ref([]);
 const name = ref("");
@@ -32,7 +33,7 @@ const addTodo = () => {
   inputContent.value = "";
 
   toast("Added Succesfully!", {
-    position: toast.POSITION.BOTTOM_RIGHT,
+    position: toast.POSITION.TOP_RIGHT,
   });
 };
 
@@ -43,7 +44,7 @@ const deleteTodo = (id) => {
   });
 
   toast("Deleted Succesfully!", {
-    position: toast.POSITION.BOTTOM_RIGHT,
+    position: toast.POSITION.TOP_RIGHT,
   });
 };
 
@@ -60,12 +61,12 @@ const finishEditing = () => {
   editingTodoId.value = null;
 
   toast("Updated Succesfully!", {
-    position: toast.POSITION.BOTTOM_RIGHT,
+    position: toast.POSITION.TOP_RIGHT,
   });
 };
 
 // capitalize the first letter of a todo
-const capitalizeFirstWord = (sentence) => {
+const capitalizeFirstLetter = (sentence) => {
   if (!sentence) return "";
   return sentence.charAt(0).toUpperCase() + sentence.slice(1).toLowerCase();
 };
@@ -89,106 +90,125 @@ onMounted(() => {
 </script>
 
 <template>
-  <h1
-    class="absolute text-5xl sm:text-7xl lg:text-8xl text-slate-800/40 font-bold left-1/2 -translate-x-1/2 top-14 z-0"
-  >
-    TaskTrack
-  </h1>
-  <main
-    class="bg-slate-900 text-slate-200 min-h-screen py-5 flex items-center justify-center"
-  >
-    <div
-      class="max-w-[340px] sm:max-w-[600px] md:max-w-[630px] mx-auto px-3 space-y-5 grow"
+  <div class="h-screen w-screen overflow-hidden bg-black">
+    <main
+      class="text-slate-200 py-5 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10"
     >
-      <!-- Header -->
-      <section>
-        <h2
-          class="flex text-3xl font-semibold bg-gradient-to-r from-purple-400 to-rose-400 from-0% to-50% text-transparent bg-clip-text"
-        >
-          what's up,
-          <input
-            class="ml-[0.5rem] bg-transparent min-w-0 grow shrink basis-0 border-none outline-none"
-            type="text"
-            placeholder="Name here"
-            v-model="name"
-          />
-        </h2>
-      </section>
-
-      <!-- Adding Todos -->
-      <section class="space-y-1">
-        <h3 class="text-xl">Create A Todo</h3>
-        <form
-          class="flex items-center justify-center gap-3 pt-3"
-          @submit.prevent="addTodo"
-        >
-          <input
-            class="bg-slate-300 text-slate-900 text-lg grow p-2 rounded-[4px] placeholder:text-slate-500"
-            type="text"
-            placeholder="e.g. make a video"
-            v-model="inputContent"
-          />
-          <button
-            class="bg-blue-600 px-5 py-2 hover:bg-blue-700 text-lg text-slate-100 font-medium rounded-[4px] cursor-pointer transition-color duration-300 ease-in-out"
-            type="submit"
+      <div
+        class="max-w-[340px] sm:max-w-[600px] md:max-w-[630px] mx-auto px-3 space-y-5 grow"
+      >
+        <!-- Header -->
+        <section>
+          <h2
+            class="flex text-3xl font-semibold bg-gradient-to-r from-purple-400 to-rose-400 from-0% to-50% text-transparent bg-clip-text"
           >
-            ADD
-          </button>
-        </form>
-      </section>
+            what's up,
+            <input
+              class="ml-[0.5rem] bg-transparent min-w-0 grow shrink basis-0 border-none outline-none"
+              type="text"
+              placeholder="Name here"
+              v-model="name"
+            />
+          </h2>
+        </section>
 
-      <!-- All Todos -->
-      <section>
-        <h3 class="text-2xl mt-14 mb-3 text-center font-semibold uppercase">
-          Todo's
-        </h3>
-
-        <div v-if="todos.length === 0">
-          <h3 class="text-lg font-medium text-green-600 text-center">
-            Your list is empty, Please add a todo.
-          </h3>
-        </div>
-
-        <div v-else class="space-y-5">
-          <div
-            class="flex items-center gap-3 px-3 py-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/5 transition-all duration-300 ease-in-out"
-            v-for="todo in todosAsc"
-            :key="todo.id"
+        <!-- Adding Todos -->
+        <section class="space-y-1">
+          <h3 class="text-xl">Create A Todo</h3>
+          <form
+            class="flex items-center justify-center gap-3 pt-3"
+            @submit.prevent="addTodo"
           >
             <input
-              class="cursor-pointer size-[15px]"
-              type="checkbox"
-              v-model="todo.completed"
+              class="bg-slate-300 text-slate-900 text-lg grow p-2 rounded-[4px] placeholder:text-slate-500"
+              type="text"
+              placeholder="e.g. make a video"
+              v-model="inputContent"
             />
-
-            <div class="grow">
-              <div v-if="editingTodoId === todo.id">
-                <input
-                  class="w-full bg-transparent border border-blue-300 px-2 rounded-sm outline-none text-lg text-inherit"
-                  type="text"
-                  v-model="todo.content"
-                  @blur="finishEditing"
-                  @keyup.enter="finishEditing"
-                />
-              </div>
-              <div v-else>
-                <span
-                  class="text-lg leading-tight"
-                  :class="todo.completed ? 'line-through text-slate-400' : ''"
-                  >{{ capitalizeFirstWord(todo.content) }}</span
-                >
-              </div>
-            </div>
-
-            <button @click="editTodo(todo.id)" class="ml-auto cursor-pointer">
-              <Settings2 size="22" class="text-slate-200 hover:text-blue-400" />
+            <button
+              class="bg-blue-600 px-5 py-2 hover:bg-blue-700 text-lg text-slate-100 font-medium rounded-[4px] cursor-pointer transition-color duration-300 ease-in-out"
+              type="submit"
+            >
+              ADD
             </button>
-            <button @click="deleteTodo(todo.id)" class="ml-auto cursor-pointer">
-              <SquareX size="22" class="text-slate-200 hover:text-red-400" />
-            </button>
+          </form>
+        </section>
+
+        <!-- All Todos -->
+        <section>
+          <h3 class="text-2xl mt-14 mb-3 text-center font-semibold uppercase">
+            Todo's
+          </h3>
+
+          <div v-if="todos.length === 0">
+            <h3 class="text-lg font-medium text-green-600 text-center">
+              Your list is empty, Please add a todo.
+            </h3>
           </div>
-        </div>
-      </section>
+
+          <div v-else class="space-y-5">
+            <div
+              class="flex items-center gap-3 px-3 py-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/5 transition-all duration-300 ease-in-out"
+              v-for="todo in todosAsc"
+              :key="todo.id"
+            >
+              <input
+                class="cursor-pointer size-[15px]"
+                type="checkbox"
+                v-model="todo.completed"
+              />
+
+              <div class="grow">
+                <div v-if="editingTodoId === todo.id">
+                  <input
+                    class="w-full bg-transparent border border-blue-300 px-2 rounded-sm outline-none text-lg text-inherit"
+                    type="text"
+                    v-model="todo.content"
+                    @keyup.enter="finishEditing"
+                  />
+                </div>
+                <div v-else>
+                  <span
+                    class="text-lg leading-tight"
+                    :class="{ 'line-through text-slate-400': todo.completed }"
+                    >{{ capitalizeFirstLetter(todo.content) }}</span
+                  >
+                </div>
+              </div>
+
+              <button @click="editTodo(todo.id)" class="ml-auto cursor-pointer">
+                <Settings2
+                  size="22"
+                  class="text-slate-200 hover:text-blue-400"
+                />
+              </button>
+              <button
+                @click="deleteTodo(todo.id)"
+                class="ml-auto cursor-pointer"
+              >
+                <SquareX size="22" class="text-slate-200 hover:text-red-400" />
+              </button>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Background effect -->
+    <div
+      class="relative z-0 h-screen w-screen mt-20 overflow-hidden [mask-image:radial-gradient(50%_50%,white,transparent)]"
+    >
+      <ParticlesEffect
+        :density="1200"
+        class="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+      />
+
+      <div
+        class="absolute inset-x-0 -bottom-[254px] h-full w-full rounded-[100%] bg-gradient-to-b from-white to-black"
+      />
+      <div
+        class="absolute inset-x-0 -bottom-[256px] h-full w-full rounded-[100%] bg-neutral-950 shadow-[inset_0_2px_20px_#fff,0_-10px_50px_1px_#ffffff7d]"
+      />
     </div>
-  </main>
+  </div>
 </template>
