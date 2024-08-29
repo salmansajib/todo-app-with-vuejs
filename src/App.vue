@@ -21,6 +21,11 @@ const todosAsc = computed(() =>
 const addTodo = () => {
   if (inputContent.value.trim() === "") {
     return;
+  } else if (todos.value.length === 5) {
+    toast("Can't add more then five todos", {
+      position: toast.POSITION.TOP_RIGHT,
+    });
+    return;
   }
 
   todos.value.push({
@@ -120,13 +125,13 @@ onMounted(() => {
             @submit.prevent="addTodo"
           >
             <input
-              class="bg-slate-300 text-slate-900 text-lg grow p-2 rounded-[4px] placeholder:text-slate-500"
+              class="bg-slate-300/20 backdrop-blur-[2px] text-slate-100 text-lg grow p-2 rounded-[4px] border border-slate-100 placeholder:text-slate-400"
               type="text"
               placeholder="e.g. make a video"
               v-model="inputContent"
             />
             <button
-              class="bg-blue-600 px-5 py-2 hover:bg-blue-700 text-lg text-slate-100 font-medium rounded-[4px] cursor-pointer transition-color duration-300 ease-in-out"
+              class="bg-blue-600 px-5 py-2 hover:bg-blue-700 text-lg text-slate-100 border border-slate-100 font-medium rounded-[4px] cursor-pointer transition-color duration-300 ease-in-out"
               type="submit"
             >
               ADD
@@ -148,7 +153,7 @@ onMounted(() => {
 
           <div v-else class="space-y-5">
             <div
-              class="flex items-center gap-3 px-3 py-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/5 transition-all duration-300 ease-in-out"
+              class="flex items-center gap-3 px-3 py-3 bg-slate-800 hover:bg-slate-700 rounded-[4px] hover:-translate-x-[2px] hover:-translate-y-[2px] hover:shadow-md hover:shadow-slate-50/10 transition-all duration-300 ease-in-out"
               v-for="todo in todosAsc"
               :key="todo.id"
             >
