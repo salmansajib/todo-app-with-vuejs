@@ -206,7 +206,7 @@ onMounted(() => {
         :density="1000"
         :size="1.5"
         :opacity="1"
-        class="absolute inset-x-0 bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
+        class="absolute inset-x-0 bottom-[20vh] md:bottom-0 h-full w-full [mask-image:radial-gradient(50%_50%,white,transparent_85%)]"
       />
 
       <div
