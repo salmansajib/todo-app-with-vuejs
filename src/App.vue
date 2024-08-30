@@ -1,8 +1,7 @@
 <script setup>
 import { ref, onMounted, computed, watch } from "vue";
 import { nanoid } from "nanoid";
-import { SquareX } from "lucide-vue-next";
-import { Settings2 } from "lucide-vue-next";
+import { SquareX, Settings2 } from "lucide-vue-next";
 import { toast } from "vue3-toastify";
 import ParticlesEffect from "@/components/stunning/ParticlesEffect/Slim.vue";
 
@@ -211,10 +210,10 @@ onMounted(() => {
       />
 
       <div
-        class="absolute inset-x-0 -bottom-[39.93vh] h-full w-full rounded-[100%] bg-gradient-to-b from-slate-100 to-slate-950"
+        class="absolute hidden md:block inset-x-0 -bottom-[39.93vh] h-full w-full rounded-[100%] bg-gradient-to-b from-slate-100 to-slate-950"
       />
       <div
-        class="absolute inset-x-0 -bottom-[40vh] h-full w-full rounded-[100%] bg-slate-950 shadow-[inset_0_2px_20px_#fff,0_-10px_50px_1px_#ffffff7d]"
+        class="absolute hidden md:block inset-x-0 -bottom-[40vh] h-full w-full rounded-[100%] bg-slate-950 shadow-[inset_0_2px_20px_#fff,0_-10px_50px_1px_#ffffff7d]"
       />
     </div>
   </div>
