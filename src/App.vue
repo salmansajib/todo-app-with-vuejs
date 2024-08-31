@@ -168,6 +168,7 @@ onMounted(() => {
                     class="w-full bg-transparent border border-blue-300 px-2 rounded-sm outline-none text-lg text-inherit"
                     type="text"
                     v-model="todo.content"
+                    @blur="finishEditing"
                     @keyup.enter="finishEditing"
                   />
                 </div>
