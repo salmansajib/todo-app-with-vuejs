@@ -164,7 +164,7 @@ onMounted(() => {
           <h2 class="text-slate-100 text-xl mb-2 text-center">Sign In</h2>
           <button
             @click="signInWithGoogle"
-            class="flex items-center gap-3 bg-slate-100 hover:bg-slate-200 text-slate-900 py-2 px-6 rounded-full transition-colors duration-200 ease-in-out"
+            class="flex items-center gap-3 bg-slate-100 hover:bg-slate-200 text-slate-900 py-2 px-8 rounded-full transition-colors duration-200 ease-in-out"
           >
             <img class="size-5" :src="googleLogo" alt="google logo" />
             Sign in with Google
